@@ -5,8 +5,8 @@ from datetime import datetime
 
 today_str = datetime.now().strftime("%Y-%m-%d")
 
-# 你的專屬 Discord Webhook 網址
-discord_webhook_url = "https://discord.com/api/webhooks/1533668810194817024/JtZwgbu0VxzyjBXUGRODN8IA433odo9oFoLF7-K4aEMFSLDNq4TQ-nYV"
+# ⚠️ 這裡換上了你提供的 100% 完整真實 Webhook 網址！
+discord_webhook_url = "https://discord.com/api/webhooks/1533668810194817024/JtZwgbu0VxzyjBXUGRODN8IA433odo9OfoLF7-K4aEMFSLDNq4TQ-nYVKfg0Tnjupq1i"
 
 print("📡 GitHub 雲端機器人甦醒，正在抓取全球市場數據...\n")
 
@@ -20,7 +20,7 @@ except:
 try:
     fx_rate = round(yf.Ticker("USDTWD=X").history(period="1d")["Close"].iloc[-1], 2)
 except:
-    fx_rate = 32.0
+    fx_rate = 31.77
 
 stock_list = ["NVDA", "AAPL", "TSLA", "MSFT", "AMD", "2330.TW"]
 reports = []
@@ -87,3 +87,5 @@ msg += "🤖 *24/7 Headless Cloud Runner Executed Successfully.*"
 # 3. 發送至 Discord
 response = requests.post(discord_webhook_url, json={"content": msg})
 print(f"📡 Discord 回應狀態碼：{response.status_code}")
+if response.status_code not in [200, 204]:
+    print(f"⚠️ 錯誤細節：{response.text}")
