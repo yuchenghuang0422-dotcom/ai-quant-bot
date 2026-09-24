@@ -1,0 +1,27 @@
+name: Daily Stock Discord Alert
+
+# ⏰ 設定定時鬧鐘：每週一到週五，台灣時間早上 8:30 自動發送！
+on:
+  schedule:
+    - cron: '30 0 * * 1-5' # 國際標準時間 00:30 = 台灣時間 08:30
+  workflow_dispatch:        # 也支援隨時在網頁上一鍵手動測試！
+
+jobs:
+  run-quant-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 下載專案程式碼
+        uses: actions/checkout@v3
+
+      - name: 安裝 Python 環境
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: 安裝金融與數據套件
+        run: |
+          pip install yfinance pandas requests
+
+      - name: 執行 Python 程式並推送到 Discord！
+        run: |
+          python main.py
